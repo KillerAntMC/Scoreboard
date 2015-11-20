@@ -1,0 +1,9 @@
+name: Scoreboard
+version: BETA 1.0
+description: The awesome free scoreboard manager
+main: nl.rien_bijl.ScoreBoard.Super
+author: HelloitsRien
+commands:
+   scoreboard:
+      description: Scoreboard main command
+      aliases: [cb, scoreb, sboard, board]

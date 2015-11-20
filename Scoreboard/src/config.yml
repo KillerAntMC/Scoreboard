@@ -1,0 +1,25 @@
+# Scoreboard configuration
+# WARNING: Anti-flicker is in beta, it might bug or lag
+# if you're having problems, please turn it off (false)
+# Please note that anti-flicker is far from working 100%
+# Is placeholders api not working? Make sure to download it from: https://www.spigotmc.org/resources/placeholderapi.6245/
+
+settings:
+   anti-flicker: 'true'
+   
+   
+scoreboard:
+  header: '&c&lScoreboard'
+  content:
+  - '&7&m----------------'
+  - '&c&lVersion:'
+  - ' &fBETA 1.0'
+  - SPACER
+  - '&c&lPlayer name:'
+  - ' &f%player_name%'
+  - SPACER
+  - '&c&lCoordinates:'
+  - ' &fX:%player_x% Y:%player_y% Z:%player_z%'
+  - SPACER
+  - '&c&lGameMode'
+  - ' &f%player_gamemode%'
