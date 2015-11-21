@@ -11,23 +11,10 @@ public class CreateSpacer {
 	{
 		String build = "";
 		
-		build = add(build);
-		build = add(build);
-		build = add(build);
-		build = add(build);
-		build = add(build);
-		build = add(build);
-		build = add(build);
-		build = add(build);
-		build = add(build);
-		build = add(build);
-		build = add(build);
-		build = add(build);
-		build = add(build);
-		build = add(build);
-		build = add(build);
-		build = add(build);
-		build = add(build);
+		for(int i = 0; i < 15; i++)
+		{
+			build = add(build);
+		}
 		
 		return build;
 		
@@ -37,53 +24,9 @@ public class CreateSpacer {
 	{
 		Random random = new Random();
 		
-		int r = random.nextInt(9) + 1;
+		int r = random.nextInt(7) + 1;
 		
-		if(r == 1)
-		{
-			build = build + ChatColor.RED;
-		}
-		if(r == 2)
-		{
-			build = build + ChatColor.AQUA;
-		}
-		if(r == 3)
-		{
-			build = build + ChatColor.BLUE;
-		}
-		if(r == 4)
-		{
-			build = build + ChatColor.DARK_BLUE;
-		}
-		if(r == 5)
-		{
-			build = build + ChatColor.AQUA;
-		}
-		if(r == 6)
-		{
-			build = build + ChatColor.GRAY;
-		}
-		if(r == 7)
-		{
-			build = build + ChatColor.WHITE;
-		}
-		if(r == 8)
-		{
-			build = build + ChatColor.DARK_AQUA;
-		}
-		if(r == 9)
-		{
-			build = build + ChatColor.DARK_BLUE;
-		}
-		if(r == 10)
-		{
-			build = build + ChatColor.DARK_GREEN;
-		}
-		if(r == 11)
-		{
-			build = build + ChatColor.DARK_PURPLE;
-		}
-		
+		build = build + ChatColor.values()[r];
 		
 		return build;
 	}

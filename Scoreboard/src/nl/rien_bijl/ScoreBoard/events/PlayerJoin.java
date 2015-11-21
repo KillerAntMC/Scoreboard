@@ -12,6 +12,9 @@ public class PlayerJoin implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e)
 	{
+		
+		Board.boards.put(e.getPlayer(), Board.manager.getNewScoreboard());
+		
 		Board.noDisplay.add(e.getPlayer());
 		Board.setBoardToPlayer(e.getPlayer());
 	}
@@ -20,5 +23,6 @@ public class PlayerJoin implements Listener {
 	public void onQuit(PlayerQuitEvent e)
 	{
 		Board.noDisplay.remove(e.getPlayer());
+		Board.boards.remove(e.getPlayer());
 	}
 }

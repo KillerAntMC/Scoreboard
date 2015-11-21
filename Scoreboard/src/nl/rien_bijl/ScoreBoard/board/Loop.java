@@ -35,7 +35,7 @@ public class Loop {
 			        	Board.setBoardToPlayer(p);
 			        }
 	            }
-	        }, 0L, 300L);	
+	        }, 0L, 100L);	
 	        
 		}
 	}

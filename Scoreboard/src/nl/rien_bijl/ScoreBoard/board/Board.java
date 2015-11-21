@@ -1,6 +1,8 @@
 package nl.rien_bijl.ScoreBoard.board;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -19,6 +21,8 @@ public class Board {
 	public static ScoreboardManager manager = Bukkit.getScoreboardManager();
 	public static ArrayList<Player> noDisplay = new ArrayList<Player>();
 	
+	public static HashMap<Player, Scoreboard> boards = new HashMap<Player, Scoreboard>();
+	
 	public static void setBoardToPlayer(Player p)
 	{
 		
@@ -28,15 +32,29 @@ public class Board {
 		
 		ConfigurationSection config = Super.config.getConfigurationSection("scoreboard");
 		
-		Scoreboard board = manager.getNewScoreboard(); 
+		Scoreboard board = boards.get(p);
 		
-		Objective obj = board.registerNewObjective("dash", "dummy");
+		
+		int r = new Random().nextInt(5999);
+		int r2 = new Random().nextInt(5999);
+		r = 1; r2 = 1;
+		
+		for(Objective unreg : board.getObjectives())
+		{
+			unreg.unregister();
+		}
+		
+		Objective obj = board.registerNewObjective("sb" + r , r2 + "");
+		
+
 		
 		if(obj.getDisplaySlot() != DisplaySlot.SIDEBAR)
 		{
 			obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 		}
-		obj.setDisplayName(Color.color(Placeholder.placeholder(p, config.getString("header"))));
+		if(!obj.getDisplayName().equals(Color.color(Placeholder.placeholder(p, config.getString("header"))))){
+			obj.setDisplayName(Color.color(Placeholder.placeholder(p, config.getString("header"))));
+		}
 		
 		int length = config.getStringList("content").size();
 		
@@ -51,6 +69,7 @@ public class Board {
 					
 					length = length - 1;
 				} else {
+					
 					Score score = obj.getScore(Color.color(Placeholder.placeholder(p, s)));
 					score.setScore(length);
 				

@@ -30,6 +30,7 @@ public class Super extends JavaPlugin {
 		
 		for(Player p : Bukkit.getOnlinePlayers())
 		{
+			Board.boards.put(p, Board.manager.getNewScoreboard());
 			Board.noDisplay.add(p);
 		}
 		
