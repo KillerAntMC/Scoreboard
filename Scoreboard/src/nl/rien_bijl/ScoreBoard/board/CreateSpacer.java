@@ -2,7 +2,8 @@ package nl.rien_bijl.ScoreBoard.board;
 
 import java.util.Random;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
+
 
 public class CreateSpacer {
 

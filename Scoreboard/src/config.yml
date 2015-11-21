@@ -6,6 +6,7 @@
 
 settings:
    anti-flicker: 'true'
+   maxchars: '32'
    
    
 scoreboard:
@@ -13,7 +14,7 @@ scoreboard:
   content:
   - '&7&m----------------'
   - '&c&lVersion:'
-  - ' &fBETA 1.2'
+  - ' &fBETA 1.2.1'
   - SPACER
   - '&c&lPlayer name:'
   - ' &f%player_name%'

@@ -45,6 +45,7 @@ public class Board {
 		}
 		
 		Objective obj = board.registerNewObjective("sb" + r , r2 + "");
+		int maxchars = Integer.parseInt(Super.config.getConfigurationSection("settings").getString("maxchars"));
 		
 
 		
@@ -64,14 +65,26 @@ public class Board {
 			{
 				if(s.trim().equals("SPACER") || s.trim().isEmpty())
 				{
-					Score score = obj.getScore(CreateSpacer.createSpacer());
-					score.setScore(length);
+					String spacer = CreateSpacer.createSpacer();
+					if(spacer.length() > maxchars)
+					{
+						Score score = obj.getScore(spacer.substring(0, maxchars));
+						score.setScore(length);
+					} else {
+						Score score = obj.getScore(spacer);
+						score.setScore(length);
+					}
 					
 					length = length - 1;
 				} else {
-					
-					Score score = obj.getScore(Color.color(Placeholder.placeholder(p, s)));
-					score.setScore(length);
+					if(Placeholder.placeholder(p, s).length() > maxchars)
+					{
+						Score score = obj.getScore(Color.color(Placeholder.placeholder(p, s)).substring(0, maxchars));
+						score.setScore(length);
+					} else {
+						Score score = obj.getScore(Color.color(Placeholder.placeholder(p, s)));
+						score.setScore(length);
+					}
 				
 					length = length - 1;
 				}
