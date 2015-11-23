@@ -10,8 +10,6 @@ public class Loop {
 
 	public Loop()
 	{
-		if(Super.config.getConfigurationSection("settings").getString("anti-flicker").equalsIgnoreCase("true"))
-		{
 			
 			BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
 	        scheduler.scheduleSyncRepeatingTask(Super.plugin, new Runnable() {
@@ -24,20 +22,7 @@ public class Loop {
 	            }
 	        }, 0L, 10L);	
 	        
-		} else {
-			
-			BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
-	        scheduler.scheduleSyncRepeatingTask(Super.plugin, new Runnable() {
-	            @Override
-	            public void run() {
-	            	for(Player p : Bukkit.getOnlinePlayers())
-			        {
-			        	Board.setBoardToPlayer(p);
-			        }
-	            }
-	        }, 0L, 100L);	
-	        
-		}
+	
 	}
 	
 }

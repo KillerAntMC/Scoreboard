@@ -14,6 +14,9 @@ public class Super extends JavaPlugin {
 	
 	public static FileConfiguration config = null;
 	public static Super plugin;
+	
+	public static boolean antiflicker = true;
+	public static int updateTicks = 10;
 
 	public void onEnable()
 	{
@@ -25,8 +28,11 @@ public class Super extends JavaPlugin {
 		
 		getCommand("scoreboard").setExecutor(new Command());
 		
+		
 		config = getConfig();
 		plugin = this;
+		
+		initiateSettings();
 		
 		for(Player p : Bukkit.getOnlinePlayers())
 		{
@@ -35,6 +41,23 @@ public class Super extends JavaPlugin {
 		}
 		
 		new Loop();
+	}
+	
+	public void reloadConfigPlugin()
+	{
+		reloadConfig();
+		initiateSettings();
+	}
+	
+	public void initiateSettings()
+	{
+		if(getConfig().getConfigurationSection("anti-flicker").getString("enabled").equalsIgnoreCase("true"))
+		{
+			antiflicker = true;
+		}
+		
+		updateTicks = getConfig().getConfigurationSection("settings").getInt("update_time_ticks");
+		
 	}
 	
 }

@@ -22,6 +22,7 @@ public class Board {
 	public static ArrayList<Player> noDisplay = new ArrayList<Player>();
 	
 	public static HashMap<Player, Scoreboard> boards = new HashMap<Player, Scoreboard>();
+	public static HashMap<Player, ObjectiveContainer> objectives = new HashMap<Player, ObjectiveContainer>();
 	
 	public static void setBoardToPlayer(Player p)
 	{
@@ -32,16 +33,25 @@ public class Board {
 		
 		ConfigurationSection config = Super.config.getConfigurationSection("scoreboard");
 		
-		Scoreboard board = boards.get(p);
+		Scoreboard board;
+		if(Super.antiflicker == true){
+		board = boards.get(p);
+		} else {
+			board = manager.getNewScoreboard();
+		}
+	
 		
+		ArrayList<String> objc = new ArrayList<String>();
 		
 		int r = new Random().nextInt(5999);
 		int r2 = new Random().nextInt(5999);
 		r = 1; r2 = 1;
 		
-		for(Objective unreg : board.getObjectives())
-		{
-			unreg.unregister();
+		if(Super.antiflicker == true){
+			for(Objective unreg : board.getObjectives())
+			{
+				unreg.unregister();
+			}
 		}
 		
 		Objective obj = board.registerNewObjective("sb" + r , r2 + "");
@@ -80,9 +90,11 @@ public class Board {
 					if(Placeholder.placeholder(p, s).length() > maxchars)
 					{
 						Score score = obj.getScore(Color.color(Placeholder.placeholder(p, s)).substring(0, maxchars));
+						objc.add(Color.color(Placeholder.placeholder(p, s)).substring(0, maxchars));
 						score.setScore(length);
 					} else {
 						Score score = obj.getScore(Color.color(Placeholder.placeholder(p, s)));
+						objc.add(Color.color(Placeholder.placeholder(p, s)));
 						score.setScore(length);
 					}
 				
@@ -90,6 +102,36 @@ public class Board {
 				}
 			}
 			
+			
+			if(Super.antiflicker == true)
+			{
+				if(objectives.containsKey(p))
+				{
+					ObjectiveContainer last = objectives.get(p);
+					
+					boolean update = true;
+					
+					for(String s : last.scores)
+					{
+						if(!objc.contains(s))
+						{
+							update = false;
+						}
+					}
+					
+					
+					if(update == false)
+					{
+						return;
+					}
+					
+					objectives.remove(p);
+					objectives.put(p, new ObjectiveContainer(objc));
+					
+				} else {
+					objectives.put(p, new ObjectiveContainer(objc));
+				}
+			}
 			
 			
 			p.setScoreboard(board);

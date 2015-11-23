@@ -5,16 +5,18 @@
 # Is placeholders api not working? Make sure to download it from: https://www.spigotmc.org/resources/placeholderapi.6245/
 
 settings:
-   anti-flicker: 'true'
    maxchars: '32'
-   
+   update_time_ticks: 10
+ 
+anti-flicker:
+   enabled: 'true'
    
 scoreboard:
   header: '&c&lScoreboard'
   content:
   - '&7&m----------------'
   - '&c&lVersion:'
-  - ' &fBETA 1.2.1'
+  - ' &fBETA 1.4'
   - SPACER
   - '&c&lPlayer name:'
   - ' &f%player_name%'
