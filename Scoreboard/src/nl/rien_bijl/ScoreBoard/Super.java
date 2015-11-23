@@ -56,6 +56,14 @@ public class Super extends JavaPlugin {
 			antiflicker = true;
 		}
 		
+		if(getConfig().getConfigurationSection("settings").contains("anti-flicker"))
+		{
+			System.out.println("=-=-=-=-=-[Scoreboard]-=-=-=-=-");
+			System.out.println("Configuration out to date, trying to fix.");
+			getConfig().getConfigurationSection("settings").set("anti-flicker", "No longer in use.");
+			System.out.println("Added warning.");
+		}
+		
 		updateTicks = getConfig().getConfigurationSection("settings").getInt("update_time_ticks");
 		
 	}
