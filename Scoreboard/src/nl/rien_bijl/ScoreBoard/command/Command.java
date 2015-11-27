@@ -10,6 +10,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import nl.rien_bijl.ScoreBoard.Color;
 import nl.rien_bijl.ScoreBoard.Super;
 import nl.rien_bijl.ScoreBoard.board.Board;
+import nl.rien_bijl.ScoreBoard.board.Loop;
 
 public class Command implements CommandExecutor {
 	
@@ -53,11 +54,13 @@ public class Command implements CommandExecutor {
 			} else if(args[0].equalsIgnoreCase("reload"))
 			{
 				if(cs.hasPermission("scoreboard.reload")){
+				Super.plugin.reloadConfigPlugin();
 				Super.plugin.reloadConfig();
-				Super.config = Super.plugin.getConfig();
-				Super.plugin.reloadConfig();
+				Super.plugin.reloadConfigPlugin();
+				
 				Super.plugin.saveConfig();
 				cs.sendMessage(Color.color("&cScoreboard's configuration is reloaded"));
+				Loop.force = true;
 				} else{
 					cs.sendMessage(Color.color("&cYou do not have permission!"));
 				}

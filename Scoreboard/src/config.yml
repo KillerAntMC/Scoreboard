@@ -6,7 +6,8 @@
 
 settings:
    maxchars: '32'
-   update_time_ticks: 10
+   update_time_ticks: 20
+   compatibility_mode: 'false'
  
 anti-flicker:
    enabled: 'true'
@@ -16,13 +17,10 @@ scoreboard:
   content:
   - '&7&m----------------'
   - '&c&lVersion:'
-  - ' &fBETA 1.4'
+  - ' &fBETA 1.6'
   - SPACER
   - '&c&lPlayer name:'
   - ' &f%player_name%'
-  - SPACER
-  - '&c&lCoordinates:'
-  - ' &fX:%player_x% Y:%player_y% Z:%player_z%'
   - SPACER
   - '&c&lGameMode'
   - ' &f%player_gamemode%'

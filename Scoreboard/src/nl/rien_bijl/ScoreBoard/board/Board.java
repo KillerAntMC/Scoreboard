@@ -33,11 +33,16 @@ public class Board {
 		
 		ConfigurationSection config = Super.config.getConfigurationSection("scoreboard");
 		
-		Scoreboard board;
-		if(Super.antiflicker == true){
-		board = boards.get(p);
-		} else {
-			board = manager.getNewScoreboard();
+		Scoreboard board = boards.get(p);
+		
+		if(Super.compatibilityMode == true)
+		{
+			if(p.getScoreboard() != null)
+			{
+				boards.remove(p);
+				boards.put(p, p.getScoreboard());
+				board = p.getScoreboard();
+			}
 		}
 	
 		
@@ -47,12 +52,10 @@ public class Board {
 		int r2 = new Random().nextInt(5999);
 		r = 1; r2 = 1;
 		
-		if(Super.antiflicker == true){
 			for(Objective unreg : board.getObjectives())
 			{
 				unreg.unregister();
 			}
-		}
 		
 		Objective obj = board.registerNewObjective("sb" + r , r2 + "");
 		int maxchars = Integer.parseInt(Super.config.getConfigurationSection("settings").getString("maxchars"));
@@ -93,6 +96,7 @@ public class Board {
 						objc.add(Color.color(Placeholder.placeholder(p, s)).substring(0, maxchars));
 						score.setScore(length);
 					} else {
+						
 						Score score = obj.getScore(Color.color(Placeholder.placeholder(p, s)));
 						objc.add(Color.color(Placeholder.placeholder(p, s)));
 						score.setScore(length);
@@ -102,28 +106,33 @@ public class Board {
 				}
 			}
 			
+			boolean update = true;
 			
+			if(!Loop.force){
+				
 			if(Super.antiflicker == true)
 			{
 				if(objectives.containsKey(p))
 				{
 					ObjectiveContainer last = objectives.get(p);
 					
-					boolean update = true;
+					
 					
 					for(String s : last.scores)
 					{
 						if(!objc.contains(s))
 						{
-							update = false;
+							if(last != null)
+							{
+								if(p.getScoreboard() != null)
+								{
+									update = false;
+								}
+							}
+						} else {
 						}
 					}
 					
-					
-					if(update == false)
-					{
-						return;
-					}
 					
 					objectives.remove(p);
 					objectives.put(p, new ObjectiveContainer(objc));
@@ -133,8 +142,12 @@ public class Board {
 				}
 			}
 			
+			}
+			Loop.force = false;
 			
-			p.setScoreboard(board);
+			if(!update){
+				p.setScoreboard(board);
+			}
 			
 			
 		} catch (Exception ex)

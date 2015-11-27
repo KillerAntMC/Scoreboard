@@ -17,9 +17,11 @@ public class Super extends JavaPlugin {
 	
 	public static boolean antiflicker = true;
 	public static int updateTicks = 10;
+	public static boolean compatibilityMode = false;
 
 	public void onEnable()
 	{
+		reloadConfig();
 		
 		Bukkit.getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
 		
@@ -37,6 +39,7 @@ public class Super extends JavaPlugin {
 		for(Player p : Bukkit.getOnlinePlayers())
 		{
 			Board.boards.put(p, Board.manager.getNewScoreboard());
+			p.setScoreboard(Board.boards.get(p));
 			Board.noDisplay.add(p);
 		}
 		
@@ -46,7 +49,8 @@ public class Super extends JavaPlugin {
 	public void reloadConfigPlugin()
 	{
 		reloadConfig();
-		initiateSettings();
+		Bukkit.getServer().getPluginManager().disablePlugin(this);
+		Bukkit.getServer().getPluginManager().enablePlugin(this);
 	}
 	
 	public void initiateSettings()
@@ -54,6 +58,8 @@ public class Super extends JavaPlugin {
 		if(getConfig().getConfigurationSection("anti-flicker").getString("enabled").equalsIgnoreCase("true"))
 		{
 			antiflicker = true;
+		} else {
+			antiflicker = false;
 		}
 		
 		if(getConfig().getConfigurationSection("settings").contains("anti-flicker"))
@@ -61,10 +67,16 @@ public class Super extends JavaPlugin {
 			System.out.println("=-=-=-=-=-[Scoreboard]-=-=-=-=-");
 			System.out.println("Configuration out to date, trying to fix.");
 			getConfig().getConfigurationSection("settings").set("anti-flicker", "No longer in use.");
+			saveConfig();
 			System.out.println("Added warning.");
 		}
 		
 		updateTicks = getConfig().getConfigurationSection("settings").getInt("update_time_ticks");
+		
+		if(getConfig().getConfigurationSection("settings").getString("compatibility_mode").equalsIgnoreCase("true"))
+		{
+			compatibilityMode = true;
+		}
 		
 	}
 	
